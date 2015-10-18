@@ -8,10 +8,10 @@ export default class Wall{
   }
 
   timeToHitParticle(particle) {
-    const relativeDistance = dimensionSelector(particle.position) - bound;
-    const relativeSpeed = dimensionSelector(particle.speed);
+    const relativeDistance = this.dimensionSelector(particle.position) - this.bound;
+    const relativeSpeed = this.dimensionSelector(particle.speed);
     if(relativeDistance * relativeSpeed < 0) {
-      const distance = Math.abs(particle.position - bound) - particle.radius;
+      const distance = Math.abs(particle.position - this.bound) - particle.radius;
       const speed = Math.abs(relativeSpeed);
       return distance/speed;
     } else {

@@ -21,7 +21,7 @@ export default class Vector {
   }
 
   substract(that) {
-    return add(this, that.negate());
+    return this.add(this, that.negate());
   }
 
 }
