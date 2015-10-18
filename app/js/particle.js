@@ -1,4 +1,4 @@
-class Particle {
+export default class Particle {
   constructor(radius, position, speed, ctx) {
     this.radius = radius;
     this.position = position;
@@ -12,7 +12,3 @@ class Particle {
     this.ctx.fill();
   }
 }
-
-
-
-export default Particle
