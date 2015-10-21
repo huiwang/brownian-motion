@@ -7,28 +7,27 @@ export default class Particle {
   }
 
   move(time) {
-    this.position = this.position.add(this.speed.scale(time));
+    this.position = this.position.add(this.speed.multiply(time));
   }
 
   timeToHitParticle(that) {
-    if (this == that) return Number.MAX_SAFE_NUMBER;
-    const dr = that.position.substract(this.position);
-    const dv = that.speed.substract(this.speed);
-    const dvdr = dr.product(dv);
-    if (dvdr > 0) return Number.MAX_SAFE_NUMBER;
-    const dvdv = dv.product(dv);
-    const drdr = dr.product(dr);
+    if (this == that) return Number.MAX_SAFE_INTEGER;
+    const dr = that.position.subtract(this.position);
+    const dv = that.speed.subtract(this.speed);
+    const dvdr = dr.dot(dv);
+    if (dvdr > 0) return Number.MAX_SAFE_INTEGER;
+    const dvdv = dv.dot(dv);
+    const drdr = dr.dot(dr);
     const sigma = this.radius + that.radius;
     const d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
-    // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
-    if (d < 0) return Number.MAX_SAFE_NUMBER;
+    if (d < 0) return Number.MAX_SAFE_INTEGER;
     return -(dvdr + Math.sqrt(d)) / dvdv;
   }
 
   bounceOffParticle(that) {
-    const dr = that.position.substract(this.position);
-    const dv = that.speed.substract(this.speed);
-    const dvdr = dr.product(dv);
+    const dr = that.position.subtract(this.position);
+    const dv = that.speed.subtract(this.speed);
+    const dvdr = dr.dot(dv);
     const dist = this.radius + that.radius; // distance between particle centers at collison
 
     // normal force F, and in x and y directions

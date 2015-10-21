@@ -1,4 +1,4 @@
-import Vector from './vector.js'
+import Vector from 'vigur'
 import Particle from './particle.js'
 import Wall from './wall.js'
 import Generator from './generator.js'

@@ -6,6 +6,7 @@ export default class Simulation {
     this.particles = particles;
     this.walls = walls;
     this.limit = limit;
+    this.resolutionHandler = resolutionHandler;
     this.pq = new PriorityQueue((e1, e2) => e1.time - e2.time);
   }
 
@@ -16,11 +17,12 @@ export default class Simulation {
         this.pq.add(e);
       }
     }
+
     while(this.pq.size > 0) {
-      const event = pq.remove();
+      const event = this.pq.remove();
       event.first.bounceOffParticle(event.second);
-      move(event.time);
-      resolutionHandler(particles);
+      this.move(event.time);
+      this.resolutionHandler(this.particles);
       if(typeof(event.first) != Wall) {
         predict(event.first).forEach(e => pq.add(e));
       }
@@ -33,7 +35,7 @@ export default class Simulation {
     for(let that of this.particles) {
       const time = particle.timeToHitParticle(that);
       if(time < this.limit) {
-        events.push(new Event(time, p, that));
+        events.push(new Event(time, particle, that));
       }
     }
 
@@ -47,6 +49,6 @@ export default class Simulation {
   }
 
   move(time) {
-    particles.forEach(p => p.move(time))
+    this.particles.forEach(p => p.move(time))
   }
 }

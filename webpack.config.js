@@ -11,9 +11,7 @@ module.exports = {
     loaders: [{
       //match all js files
       test: /\.js$/,
-      include: [
-        path.resolve(__dirname, "app/src")
-      ],
+      exclude: /node_modules/,
       loader: "babel-loader"
     }],
   },

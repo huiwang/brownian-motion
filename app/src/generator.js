@@ -1,4 +1,4 @@
-import Vector from './vector.js';
+import Vector from 'vigur';
 import Particle from './particle.js';
 
 export default class Generator {
