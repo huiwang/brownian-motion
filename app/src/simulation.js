@@ -1,4 +1,6 @@
 import Event from './event.js';
+import Particle from './particle.js';
+import Wall from './wall.js';
 import PriorityQueue from 'es-collections/PriorityQueue';
 
 export default class Simulation {
@@ -20,13 +22,13 @@ export default class Simulation {
 
     while(this.pq.size > 0) {
       const event = this.pq.remove();
-      event.first.bounceOffParticle(event.second);
       this.move(event.time);
+      event.second.bounceOffParticle(event.first);
       this.resolutionHandler(this.particles);
-      if(typeof(event.first) != Wall) {
-        predict(event.first).forEach(e => pq.add(e));
+      this.predict(event.first).forEach(e => this.pq.add(e));
+      if(typeof(event.second) instanceof Particle) {
+        this.predict(event.second).forEach(e => this.pq.add(e));
       }
-      predict(event.second).forEach(e => pq.add(e));
     }
   }
 
@@ -42,7 +44,7 @@ export default class Simulation {
     for(let wall of this.walls) {
       const time = wall.timeToHitParticle(particle);
       if(time < this.limit) {
-        events.push(new Event(time, p, wall));
+        events.push(new Event(time, particle, wall));
       }
     }
     return events;

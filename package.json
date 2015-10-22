@@ -8,7 +8,7 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "mocha --watch --compilers js:mocha-babel app/test/particle_test.js"
+    "test": "mocha --watch --compilers js:mocha-babel app/test/*.js"
   },
   "author": "Hui WANG",
   "license": "ISC",

@@ -11,7 +11,7 @@ export default class Wall {
     const relativeDistance = this.dimensionSelector(particle.position) - this.bound;
     const relativeSpeed = this.dimensionSelector(particle.speed);
     if (relativeDistance * relativeSpeed < 0) {
-      const distance = Math.abs(particle.position - this.bound) - particle.radius;
+      const distance = Math.abs(this.dimensionSelector(particle.position) - this.bound) - particle.radius;
       const speed = Math.abs(relativeSpeed);
       return distance / speed;
     } else {
@@ -20,6 +20,6 @@ export default class Wall {
   }
 
   bounceOffParticle(particle) {
-    speedTransformer(particle);
+    this.speedTransformer(particle);
   }
 }
