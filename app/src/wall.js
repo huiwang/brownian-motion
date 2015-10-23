@@ -5,6 +5,7 @@ export default class Wall {
     this.bound = bound;
     this.dimensionSelector = dimensionSelector;
     this.speedTransformer = speedTransformer;
+    this.hits = 0;
   }
 
   timeToHitParticle(particle) {
@@ -21,5 +22,7 @@ export default class Wall {
 
   bounceOffParticle(particle) {
     this.speedTransformer(particle);
+    this.hits++;
+    particle.hits++;
   }
 }

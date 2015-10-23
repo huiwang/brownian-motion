@@ -4,50 +4,52 @@ import Wall from './wall.js';
 import PriorityQueue from 'es-collections/PriorityQueue';
 
 export default class Simulation {
-  constructor(particles, walls, limit, resolutionHandler) {
+  constructor(particles, walls) {
     this.particles = particles;
     this.walls = walls;
-    this.limit = limit;
-    this.resolutionHandler = resolutionHandler;
+    this.bouncable = particles.concat(walls);
+    this.clock = 0;
     this.pq = new PriorityQueue((e1, e2) => e1.time - e2.time);
+
   }
 
-  simulate() {
-    for(let p of this.particles) {
-      let events = this.predict(p);
-      for(let e of events) {
-        this.pq.add(e);
+  start(timestamp) {
+    this.clock = timestamp;
+    this.particles.forEach(p => this.predict(p));
+  }
+
+  step(timestamp) {
+    const progress = timestamp - this.clock;
+    while (this.pq.size > 0) {
+      const event = this.pq.remove();
+      if (event.time <= timestamp) {
+        this.play(event, timestamp);
+      } else {
+        this.pq.add(event);
+        break;
       }
     }
+    this.move(progress);
+    this.clock = timestamp;
+  }
 
-    while(this.pq.size > 0) {
-      const event = this.pq.remove();
-      this.move(event.time);
-      event.second.bounceOffParticle(event.first);
-      this.resolutionHandler(this.particles);
-      this.predict(event.first).forEach(e => this.pq.add(e));
-      if(typeof(event.second) instanceof Particle) {
-        this.predict(event.second).forEach(e => this.pq.add(e));
-      }
+  play(event, timestamp) {
+    this.move(event.time - this.clock);
+    this.clock = event.time;
+    event.second.bounceOffParticle(event.first);
+    this.predict(event.first);
+    if (typeof(event.second) instanceof Particle) {
+      this.predict(event.second);
     }
   }
 
   predict(particle) {
-    const events = [];
-    for(let that of this.particles) {
-      const time = particle.timeToHitParticle(that);
-      if(time < this.limit) {
-        events.push(new Event(time, particle, that));
+    for (let b of this.bouncable) {
+      for (let p of this.particles) {
+        const time = b.timeToHitParticle(p);
+        this.pq.add(new Event(this.clock + time, p, b));
       }
     }
-
-    for(let wall of this.walls) {
-      const time = wall.timeToHitParticle(particle);
-      if(time < this.limit) {
-        events.push(new Event(time, particle, wall));
-      }
-    }
-    return events;
   }
 
   move(time) {

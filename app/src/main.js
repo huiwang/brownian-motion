@@ -1,28 +1,35 @@
-import Vector from 'vigur';
 import Particle from './particle.js';
+import Vector from 'vigur';
 import Wall from './wall.js';
 import Generator from './generator.js';
-import drawParticle from './drawer.js';
 import wallBuilder from './wall_builder.js';
-import PriorityQueue from 'es-collections';
-import Event from './event.js';
 import Simulation from './simulation.js';
+import Drawer from './drawer.js';
 
 (function() {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  const walls = wallBuilder(600,280);
-  ctx.beginPath();
-  ctx.rect(0,0,600,280);
-  ctx.stroke();
-  const generator = new Generator(600, 280);
+  const width = canvas.width;
+  const height = canvas.height;
+  const walls = wallBuilder(width, height);
+  const generator = new Generator(width, height);
   const particles = generator.generate();
-  const resolutionHandler = updatedParticles => {
-    for (let p of updatedParticles) {
-      drawParticle(ctx, p);
-    }
+  const drawer = new Drawer(ctx, width, height);
+  const redraw = () => {
+    drawer.clearRect();
+    drawer.drawRect();
+    particles.forEach(p => drawer.drawParticle(p));
+  }
+
+  const simulation = new Simulation(particles, walls);
+  const step = timestamp => {
+    simulation.step(timestamp);
+    redraw();
+    window.requestAnimationFrame(step);
   };
-  const simulation = new Simulation(particles, walls, 10000, resolutionHandler);
-  resolutionHandler(particles);
-  simulation.simulate();
+  window.requestAnimationFrame(timestamp => {
+    simulation.start(timestamp);
+    redraw();
+    window.requestAnimationFrame(step);
+  });
 })();

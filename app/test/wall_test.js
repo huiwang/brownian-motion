@@ -15,5 +15,7 @@ describe('Wall', () => {
     const particle = new Particle(10, 5, new Vector(195, 10), new Vector(10,0));
     wall.bounceOffParticle(particle);
     assert.equal(-10, particle.speed.x);
+    assert.equal(1, particle.hits);
+    assert.equal(1, wall.hits);
   });
 })

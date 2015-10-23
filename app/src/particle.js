@@ -1,13 +1,15 @@
+import Vector from 'vigur';
 export default class Particle {
   constructor(mass, radius, position, speed) {
     this.mass = mass;
     this.radius = radius;
     this.position = position;
     this.speed = speed;
+    this.hits = 0;
   }
 
   move(time) {
-    this.position = this.position.add(this.speed.multiply(time));
+    this.position = this.position.add(new Vector(this.speed.x * time, this.speed.y * time));
   }
 
   timeToHitParticle(that) {
@@ -40,6 +42,8 @@ export default class Particle {
     this.speed.y += fy / this.mass;
     that.speed.x -= fx / that.mass;
     that.speed.y -= fy / that.mass;
+    this.hits++;
+    that.hits++;
   }
 
 }
