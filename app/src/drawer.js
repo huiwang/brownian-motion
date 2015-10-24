@@ -6,6 +6,10 @@ export default class Drawer {
   }
 
   drawParticle(particle) {
+    const r = particle.position;
+    if(r.x > this.width || r.y > this.height) {
+      throw "out of board (" + r.x + "," + r.y + ")";
+    }
     this.ctx.beginPath();
     this.ctx.arc(particle.position.x, particle.position.y, particle.radius, 0, 2 * Math.PI, false);
     this.ctx.fillStyle = 'green';

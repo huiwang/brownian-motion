@@ -1,4 +1,4 @@
-import Vector from 'vigur';
+import Vector from './vector.js';
 import Particle from './particle.js';
 
 export default class Generator {
@@ -13,10 +13,9 @@ export default class Generator {
     //  new Particle(1, 10, new Vector(40, 70), new Vector(5, 20)),
     //  new Particle(1, 10, new Vector(90, 90), new Vector(5, 20)),
     //  new Particle(1, 10, new Vector(120, 110), new Vector(5, 20)),
-    //  new Particle(1, 10, new Vector(140, 70), new Vector(5, 20)),
-    //  new Particle(1, 10, new Vector(140, 170), new Vector(0.3, 0.2)),
-      new Particle(1, 10, new Vector(240, 100), new Vector(0.1, 0.3)),
-
+      new Particle(10, new Vector(140, 70), new Vector(0.2, 0)),
+      new Particle(10, new Vector(140, 50), new Vector(0.3,0)),
+      new Particle(10, new Vector(240, 100), new Vector(0.5,0.3))
     ];
   }
 }

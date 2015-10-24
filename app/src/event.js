@@ -1,5 +1,6 @@
 export default class Event {
-  constructor(time, first, second) {
+  constructor(id, time, first, second) {
+    this.id = id;
     this.time = time;
     this.first = first;
     this.second = second;

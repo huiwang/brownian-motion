@@ -15,14 +15,16 @@ import Drawer from './drawer.js';
   const generator = new Generator(width, height);
   const particles = generator.generate();
   const drawer = new Drawer(ctx, width, height);
+  const timestampSpan = document.getElementById('timestamp');
   const redraw = () => {
     drawer.clearRect();
     drawer.drawRect();
     particles.forEach(p => drawer.drawParticle(p));
-  }
+  };
 
   const simulation = new Simulation(particles, walls);
   const step = timestamp => {
+    timestampSpan.innerHTML = timestamp;
     simulation.step(timestamp);
     redraw();
     window.requestAnimationFrame(step);

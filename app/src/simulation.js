@@ -10,7 +10,7 @@ export default class Simulation {
     this.bouncable = particles.concat(walls);
     this.clock = 0;
     this.pq = new PriorityQueue((e1, e2) => e1.time - e2.time);
-
+    this.eventId = 0;
   }
 
   start(timestamp) {
@@ -19,21 +19,24 @@ export default class Simulation {
   }
 
   step(timestamp) {
-    const progress = timestamp - this.clock;
+    let remaining = timestamp - this.clock;
     while (this.pq.size > 0) {
       const event = this.pq.remove();
       if (event.time <= timestamp) {
-        this.play(event, timestamp);
+        if(event.isValid()) {
+          this.play(event);
+          remaining = timestamp - event.time;
+        }
       } else {
         this.pq.add(event);
         break;
       }
     }
-    this.move(progress);
+    this.move(remaining);
     this.clock = timestamp;
   }
 
-  play(event, timestamp) {
+  play(event) {
     this.move(event.time - this.clock);
     this.clock = event.time;
     event.second.bounceOffParticle(event.first);
@@ -47,7 +50,10 @@ export default class Simulation {
     for (let b of this.bouncable) {
       for (let p of this.particles) {
         const time = b.timeToHitParticle(p);
-        this.pq.add(new Event(this.clock + time, p, b));
+        if(time != Number.MAX_SAFE_INTEGER) {
+          this.pq.add(new Event(this.eventId, this.clock + time, p, b));
+          this.eventId++;
+        }
       }
     }
   }

@@ -21,7 +21,6 @@
     "webpack": "^1.12.2"
   },
   "dependencies": {
-    "es-collections": "0.0.1",
-    "vigur": "^0.1.1"
+    "es-collections": "0.0.1"
   }
 }
