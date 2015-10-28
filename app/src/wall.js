@@ -1,11 +1,26 @@
 import Particle from './particle.js'
 
 export default class Wall {
+  static rectangleWalls(width, height) {
+    const xSelector = vector => vector.x;
+    const ySelector = vector => vector.y;
+    const xSpeedTransformer = particle => {
+      particle.speed.x = particle.speed.x * -1
+    };
+    const ySeepdTransformer = particle => {
+      particle.speed.y = particle.speed.y * -1
+    };
+    const topWall = new Wall(0, ySelector, ySeepdTransformer);
+    const botWall = new Wall(height, ySelector, ySeepdTransformer);
+    const leftWall = new Wall(0, xSelector, xSpeedTransformer);
+    const rightWall = new Wall(width, xSelector, xSpeedTransformer);
+    return [topWall, botWall, leftWall, rightWall];
+  }
+
   constructor(bound, dimensionSelector, speedTransformer) {
     this.bound = bound;
     this.dimensionSelector = dimensionSelector;
     this.speedTransformer = speedTransformer;
-    this.hits = 0;
   }
 
   timeToHitParticle(particle) {
@@ -22,7 +37,10 @@ export default class Wall {
 
   bounceOffParticle(particle) {
     this.speedTransformer(particle);
-    this.hits++;
     particle.hits++;
+  }
+
+  toString() {
+    return "Wall " + this.bound
   }
 }

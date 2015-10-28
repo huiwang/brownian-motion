@@ -9,13 +9,16 @@ export default class Generator {
 
   generate() {
     return [
-    //new Particle(1, 10, new Vector(10, 20), new Vector(-4, 10)),
-    //  new Particle(1, 10, new Vector(40, 70), new Vector(5, 20)),
-    //  new Particle(1, 10, new Vector(90, 90), new Vector(5, 20)),
-    //  new Particle(1, 10, new Vector(120, 110), new Vector(5, 20)),
-      new Particle(10, new Vector(140, 70), new Vector(0.2, 0)),
-      new Particle(10, new Vector(140, 50), new Vector(0.3,0)),
-      new Particle(10, new Vector(240, 100), new Vector(0.5,0.3))
+    new Particle(10, new Vector(10, 70), new Vector(-0.4, 0.1)),
+    new Particle(10, new Vector(10, 100), new Vector(-0.1, 0.1)),
+    new Particle(10, new Vector(10, 150), new Vector(-0.2, 0.1)),
+    new Particle(10, new Vector(70, 70), new Vector(0.3, 0.1)),
+    new Particle(10, new Vector(100, 70), new Vector(-0.4, 0.1)),
+    new Particle(10, new Vector(130, 70), new Vector(-0.4, 0.1)),
+    new Particle(5, new Vector(170, 90), new Vector(-0.4, 0.1)),
+    new Particle(30, new Vector(200, 170), new Vector(-0.4, 0.1)),
+    new Particle(10, new Vector(20, 20), new Vector(0.1,0.15)),
+    new Particle(10, new Vector(60, 20), new Vector(0.2,-0.15))
     ];
   }
 }

@@ -13,10 +13,14 @@ export default class Vector {
   }
 
   multiply(c) {
-    return new Vector(this.x * c, this.y *c );
+    return new Vector(this.x * c, this.y * c);
   }
 
   dot(v) {
     return this.x * v.x + this.y * v.y;
+  }
+
+  toString() {
+    return `(${this.x}, ${this.y})`;
   }
 }

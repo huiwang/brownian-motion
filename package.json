@@ -8,7 +8,8 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "mocha --watch --compilers js:mocha-babel app/test/*.js"
+    "test": "mocha --watch --compilers js:mocha-babel app/test/*.js",
+    "test-simul": "mocha --debug-brk --watch --compilers js:mocha-babel app/test/simulation_test.js"
   },
   "author": "Hui WANG",
   "license": "ISC",

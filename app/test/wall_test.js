@@ -16,6 +16,5 @@ describe('Wall', () => {
     wall.bounceOffParticle(particle);
     assert.equal(-10, particle.speed.x);
     assert.equal(1, particle.hits);
-    assert.equal(1, wall.hits);
   });
 })

@@ -10,6 +10,7 @@ export default class Particle {
 
   move(time) {
     this.position = this.position.add(this.speed.multiply(time));
+    
   }
 
   timeToHitParticle(that) {
@@ -19,6 +20,7 @@ export default class Particle {
     const dvdr = dr.dot(dv);
     if (dvdr > 0) return Number.MAX_SAFE_INTEGER;
     const dvdv = dv.dot(dv);
+    if (dvdv == 0) return Number.MAX_SAFE_INTEGER;
     const drdr = dr.dot(dr);
     const sigma = this.radius + that.radius;
     const d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
@@ -44,6 +46,10 @@ export default class Particle {
     that.speed.y -= fy / that.mass;
     this.hits++;
     that.hits++;
+  }
+
+  toString() {
+    return `Particle {r@${this.position.toString()}, v@${this.speed.toString()}}`;
   }
 
 }

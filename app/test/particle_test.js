@@ -21,6 +21,8 @@ describe('Particle', () => {
     const p2 = new Particle(10, new Vector(30, 10), new Vector(-1,0));
     p1.bounceOffParticle(p2);
     assert.equal(-1, p1.speed.x);
+    assert.equal(1, p1.hits);
     assert.equal(1, p2.speed.x);
+    assert.equal(1, p2.hits);
   });
 });
