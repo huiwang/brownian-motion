@@ -24,7 +24,7 @@ export default class Simulation {
     this.log("step " + timestamp);
     while (this.pq.size > 0) {
       const peek = this.pq.peek();
-      this.log("get " + event);
+      this.log("get " + peek);
       if (peek.time <= timestamp) {
         const event = this.pq.remove();
         if (event.isValid()) {

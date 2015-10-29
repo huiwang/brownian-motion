@@ -12,7 +12,11 @@ module.exports = {
       //match all js files
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: "babel-loader"
+      loader: "babel-loader",
+      query: {
+        optional: ['runtime'],
+        stage: 0
+      }
     }],
   },
 };
