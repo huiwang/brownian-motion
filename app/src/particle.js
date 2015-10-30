@@ -10,7 +10,7 @@ export default class Particle {
 
   move(time) {
     this.position = this.position.add(this.speed.multiply(time));
-    
+
   }
 
   timeToHitParticle(that) {
@@ -46,6 +46,12 @@ export default class Particle {
     that.speed.y -= fy / that.mass;
     this.hits++;
     that.hits++;
+  }
+
+  overlap(that) {
+    const dr = that.position.subtract(this.position);
+    const sigma = that.radius + this.radius;
+    return dr.dot(dr) < sigma * sigma;
   }
 
   toString() {
